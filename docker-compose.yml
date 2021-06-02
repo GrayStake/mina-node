@@ -1,0 +1,42 @@
+version: '3.7'
+
+services:
+  node:
+    image: minaprotocol/mina-daemon-baked:1.1.5-a42bdee
+    container_name: node
+    ports:
+      - 8305:8305
+    environment:
+      - CODA_PRIVKEY_PASS=$CODA_PRIVKEY_PASS
+    volumes:
+      - ./keys:/keys:ro
+      - ./.mina-config:/root/.mina-config/
+    networks:
+      - mina_network
+    command: [
+      "daemon",
+      "--insecure-rest-server",
+      "--file-log-level", 
+      "Debug",
+      "--log-level",
+      "Info",
+      "--peer-list-url",
+      "https://storage.googleapis.com/mina-seed-lists/mainnet_seeds.txt",
+      "--external-port",
+      "8305",
+      "--limited-graphql-port",
+      "3095",
+      "--open-limited-graphql-port"
+    ]
+  sidecar:
+    image: minaprotocol/mina-bp-stats-sidecar
+    container_name: sidecar
+    volumes:
+      - ./mina-sidecar-config.json:/etc/mina-sidecar.json:ro
+    networks:
+      - mina_network
+
+networks:
+  mina_network:
+    driver: overlay
+    name: 'mina_network'
