@@ -5,7 +5,10 @@ services:
     image: minaprotocol/mina-daemon-baked:1.1.5-a42bdee
     container_name: node
     ports:
-      - "${PORT}:8305"
+      - target: 8305
+        published: ${PORT} 
+        protocol: tcp
+        mode: host 
     env_file:
       - ./.env
     environment:
