@@ -45,6 +45,13 @@ services:
       - ./mina-sidecar-config.json:/etc/mina-sidecar.json:ro
     networks:
       - mina_network
+  monitor:
+    image: graystake/mina-monitor:1.1.0
+    container_name: monitor
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - mina_network
 
 networks:
   mina_network:
