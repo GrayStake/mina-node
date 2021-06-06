@@ -15,6 +15,7 @@ services:
       # - ./.mina-config:/root/.mina-config/
     networks:
       - mina_network
+    restart: always
     command: [
       "daemon",
       "--insecure-rest-server",
@@ -45,6 +46,7 @@ services:
       - ./mina-sidecar-config.json:/etc/mina-sidecar.json:ro
     networks:
       - mina_network
+    restart: always
   monitor:
     image: graystake/mina-monitor:1.1.0
     container_name: monitor
@@ -52,6 +54,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - mina_network
+    restart: always
 
 networks:
   mina_network:
