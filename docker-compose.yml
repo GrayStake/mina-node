@@ -5,12 +5,14 @@ services:
     image: minaprotocol/mina-daemon-baked:1.1.5-a42bdee
     container_name: node
     ports:
-      - 8305:8305
+      - "${PORT}:8305"
+    env_file:
+      - ./.env
     environment:
-      - CODA_PRIVKEY_PASS=$CODA_PRIVKEY_PASS
+      - "CODA_PRIVKEY_PASS=${CODA_PRIVKEY_PASS}"
     volumes:
       - ./keys:/keys:ro
-      - ./.mina-config:/root/.mina-config/
+      # - ./.mina-config:/root/.mina-config/
     networks:
       - mina_network
     command: [
@@ -26,7 +28,15 @@ services:
       "8305",
       "--limited-graphql-port",
       "3095",
-      "--open-limited-graphql-port"
+      "--open-limited-graphql-port",
+      "--snark-worker-fee",
+      "0.02",
+      "--snark-worker-parallelism",
+      "1",
+      "--run-snark-worker",
+      "${SNARK_WORKER_KEY}",
+      "--block-producer-key",
+      "/keys/${BLOCK_PRODUCER_KEY}"
     ]
   sidecar:
     image: minaprotocol/mina-bp-stats-sidecar
