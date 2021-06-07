@@ -5,7 +5,7 @@ services:
     image: minaprotocol/mina-daemon-baked:1.1.5-a42bdee
     container_name: node
     ports:
-      - target: 8305
+      - target: ${PORT}
         published: ${PORT} 
         protocol: tcp
         mode: host 
@@ -29,7 +29,7 @@ services:
       "--peer-list-url",
       "https://storage.googleapis.com/mina-seed-lists/mainnet_seeds.txt",
       "--external-port",
-      "8305",
+      "${PORT}",
       "--limited-graphql-port",
       "3095",
       "--open-limited-graphql-port",
