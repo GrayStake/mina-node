@@ -34,7 +34,7 @@ services:
       "3095",
       "--open-limited-graphql-port",
       "--snark-worker-fee",
-      "0.02",
+      "${SNARK_WORKER_FEE}",
       "--snark-worker-parallelism",
       "1",
       "--run-snark-worker",
