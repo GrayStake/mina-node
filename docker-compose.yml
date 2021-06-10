@@ -51,7 +51,7 @@ services:
       - mina_network
     restart: always
   monitor:
-    image: graystake/mina-monitor:1.1.0
+    image: graystake/mina-monitor:1.1.1
     container_name: monitor
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
